@@ -42,5 +42,10 @@ indexesExtract <- c(1,2,3, grep("mean\\(\\)|std\\(\\)", names(data), ignore.case
 # Extract specific data
 data_subset <- data[, indexesExtract]
 
-library(plyr)
-data_tidy <- ddply(data_subset, .(SubjectID, ActivityLabel), mean)
+## Data analysis:
+library(dplyr)
+data_subset_df <- tbl_df(data_subset)
+
+data_analysis <- data_subset_df %>%
+  group_by(SubjectID, ActivityLabel) %>%
+  summarise_each(funs(mean))
