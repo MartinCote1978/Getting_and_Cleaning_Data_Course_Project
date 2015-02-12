@@ -1,7 +1,11 @@
 ### run_analysis.R
 
 # Load features
-features <- read.csv(file = "./UCI HAR Dataset/features.txt", header = FALSE, sep = "", colClasses=c("integer", "character"))
+features <- read.csv(file = "./UCI HAR Dataset/features.txt",
+                     header = FALSE,
+                     sep = "",
+                     colClasses=c("integer", "character")
+                     )
 # Gyro & Acc data
 X_train <- read.csv(file = "./UCI HAR Dataset/train/X_train.txt", header = FALSE,sep = "")
 names(X_train) <- features[, 2]
@@ -44,8 +48,11 @@ data_subset <- data[, indexesExtract]
 
 ## Data analysis:
 library(dplyr)
+library(tidyr)
 data_subset_df <- tbl_df(data_subset)
 
 data_analysis <- data_subset_df %>%
   group_by(SubjectID, ActivityLabel) %>%
   summarise_each(funs(mean))
+
+write.csv(data_analysis, file="data_analysis.txt")
