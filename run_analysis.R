@@ -5,7 +5,7 @@ features <- read.csv(file = "./UCI HAR Dataset/features.txt",
                      header = FALSE,
                      sep = "",
                      colClasses=c("integer", "character")
-                     )
+)
 # Gyro & Acc data
 X_train <- read.csv(file = "./UCI HAR Dataset/train/X_train.txt", header = FALSE,sep = "")
 names(X_train) <- features[, 2]
@@ -23,7 +23,6 @@ y_test <- read.csv(file = "./UCI HAR Dataset/test/y_test.txt", header = FALSE, s
 names(y_test) <- "ActivityID"
 y_test <- merge(y_test, activity_labels, "ActivityID")
 
-
 # Load who performed the activity for each observation
 subject_train <- read.csv(file = "./UCI HAR Dataset/train/subject_train.txt", header = FALSE, sep = "")
 names(subject_train) <- "SubjectID"
@@ -36,23 +35,26 @@ data_train <- cbind(subject_train, y_train, X_train)
 # Combine data for 'test'
 data_test <- cbind(subject_test, y_test, X_test)
 
-# Merge all data set
-data <- rbind(data_train, data_test)
-# summary(data)
+# Switching to DPLYR & TIDYR packages...
+library(dplyr)
+library(tidyr)
+
+# Converting data.frame into DPLYR table
+data_train_df <- tbl_df(data_train)
+data_test_df <- tbl_df(data_test)
+
+# Merge both datasets into combined dataset
+data_df <- union(data_train_df, data_test_df)
 
 # Extract only the 'median' and 'standard deviation' measurements
 # Obtain indexes where the column names has "mean()" or "std()"
-indexesExtract <- c(1,2,3, grep("mean\\(\\)|std\\(\\)", names(data), ignore.case=TRUE))
-# Extract specific data
-data_subset <- data[, indexesExtract]
+indexesExtract <- c(1,3, grep("mean\\(\\)|std\\(\\)", names(data_df), ignore.case=TRUE))
+data_df <- data_df[ , indexesExtract]
 
-## Data analysis:
-library(dplyr)
-library(tidyr)
-data_subset_df <- tbl_df(data_subset)
-
-data_analysis <- data_subset_df %>%
+# Perform analysis: 1. group by subject and activity label, 2. establish 'mean' of each column
+data_analysis <- data_df %>%
   group_by(SubjectID, ActivityLabel) %>%
   summarise_each(funs(mean))
 
+# Export analysis results to text file
 write.csv(data_analysis, file="data_analysis.txt")
