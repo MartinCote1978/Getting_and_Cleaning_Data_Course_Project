@@ -29,19 +29,19 @@ names(subject_train) <- "SubjectID"
 subject_test <- read.csv(file = "./UCI HAR Dataset/test/subject_test.txt", header = FALSE, sep = "")
 names(subject_test) <- "SubjectID"
 
-# Combine data for 'train'
-data_train <- cbind(subject_train, y_train, X_train)
-
-# Combine data for 'test'
-data_test <- cbind(subject_test, y_test, X_test)
-
 # Switching to DPLYR & TIDYR packages...
 library(dplyr)
 library(tidyr)
 
-# Converting data.frame into DPLYR table
-data_train_df <- tbl_df(data_train)
-data_test_df <- tbl_df(data_test)
+# Combine data for 'train'
+data_train_df <- tbl_df(subject_train) %>%
+  bind_cols(y_train) %>%
+  bind_cols(X_train)
+
+# Combine data for 'test'
+data_test_df <- tbl_df(subject_test) %>%
+  bind_cols(y_test) %>%
+  bind_cols(X_test)
 
 # Merge both datasets into combined dataset
 data_df <- union(data_train_df, data_test_df)
