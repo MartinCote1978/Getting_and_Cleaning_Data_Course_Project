@@ -45,8 +45,9 @@ Using regular base R data.frame, load the following data set:
 ### 3. Perform preferred analysis
 In order to perform the analysis on a subset of columns:
 3.1. Identify the columns to be included via their name (or what their names contain - in this case, only the 'median' or 'standard deviation' measurements).
+Note: the strings "mean()" and "std()" (including the parenthesis) were used to identify columns referring to either mean or standard deviation.
 
-3.2. Obtain indexes for those columns and those other desired columns (i.e. SubjectID and Activity Labels).
+3.2. Obtain indexes for those columns and those other desired columns (i.e. Subject Identifier and Activity Labels).
 
 3.3. Perform analysis by:
     3.3.1. grouping by subject and activity label.

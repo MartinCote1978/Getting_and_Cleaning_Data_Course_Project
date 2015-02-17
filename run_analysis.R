@@ -60,7 +60,7 @@ data_df <- data_df[ , indexesExtract]
 
 # Perform analysis: 1. group by subject and activity label, 2. establish 'mean' of each column
 data_analysis <- data_df %>%
-  group_by(SubjectID, ActivityLabel) %>%
+  group_by(ActivityLabel, SubjectID) %>%
   summarise_each(funs(mean))
 
 ## 4. Output the results

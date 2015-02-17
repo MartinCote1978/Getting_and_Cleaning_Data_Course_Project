@@ -46,3 +46,5 @@ Temporary Items
 getdata-projectfiles-UCI HAR Dataset.zip
 data_analysis-FIRSTVERSION.txt
 data_analysis3.txt
+data/uci_har_dataset.zip
+reference-run_analysis.R
