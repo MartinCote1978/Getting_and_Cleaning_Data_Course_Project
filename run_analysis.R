@@ -1,5 +1,10 @@
-### run_analysis.R
+# run_analysis.R - Analysis
 
+## Pre-Requisites:
+# 1. Working directory requires to be set where the Samsum data set was saved.
+# 2. Samsung data set requires to be unzip within the working directory.
+
+## 1. Load all data set, including column names and/or observation descriptions.
 # Load features
 features <- read.csv(file = "./UCI HAR Dataset/features.txt",
                      header = FALSE,
@@ -29,6 +34,7 @@ names(subject_train) <- "SubjectID"
 subject_test <- read.csv(file = "./UCI HAR Dataset/test/subject_test.txt", header = FALSE, sep = "")
 names(subject_test) <- "SubjectID"
 
+## 2. Clean all data sets, combining into 1 data set to be manipulated.
 # Switching to DPLYR & TIDYR packages...
 library(dplyr)
 library(tidyr)
@@ -46,6 +52,7 @@ data_test_df <- tbl_df(subject_test) %>%
 # Merge both datasets into combined dataset
 data_df <- union(data_train_df, data_test_df)
 
+## 3. Perform preferred analysis
 # Extract only the 'median' and 'standard deviation' measurements
 # Obtain indexes where the column names has "mean()" or "std()"
 indexesExtract <- c(1,3, grep("mean\\(\\)|std\\(\\)", names(data_df), ignore.case=TRUE))
@@ -56,5 +63,6 @@ data_analysis <- data_df %>%
   group_by(SubjectID, ActivityLabel) %>%
   summarise_each(funs(mean))
 
+## 4. Output the results
 # Export analysis results to text file
-write.csv(data_analysis, file="data_analysis.txt")
+write.table(data_analysis, file="data_analysis.txt", row.names=FALSE)
