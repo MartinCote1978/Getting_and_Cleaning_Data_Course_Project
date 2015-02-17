@@ -25,13 +25,13 @@ Using regular base R data.frame, load the following data set:
 1.2. Gyro & Acc: actual measures (i.e. observations) for each measure, for each subject (i.e. participant) and activity.
     1.2.1 As a sub-step, assign the proper features (i.e. variable/column names) to each variable
 
-1.3. Activity: actual activity names/labels.
+1.3. Activity: Read in actual activity names/labels.
 
-1.4. Activity description: actual description of the activity that was performed in this related set of measures.
-    1.4.1 As a sub-step, assign the proper variable names (i.e. Activity)
+1.4. Activity description: actual identifier of the activity that was performed in this related set of measures.
+    1.4.1 As a sub-step, assign the proper variable names (i.e. Activity ID)
 
-1.5. Activity subject: subject (i.e. participant) who perform this activity/observation and related actual measures.
-    1.5.1 As a sub-step, assign the proper variable names (i.e. Subject)
+1.5. Activity subject: subject (i.e. participant) identifier who perform this activity/observation and related actual measures.
+    1.5.1 As a sub-step, assign the proper variable names (i.e. Subject ID)
 
 ### 2. Clean all data sets, combining into 1 data set to be manipulated.
 2.1. Until now, all manipulation was performed using basic R data.frame functions, loading the DPLYR and TIDYR packages to complete the last data manipulation and analysis.
@@ -52,7 +52,9 @@ Note: the strings "mean()" and "std()" (including the parenthesis) were used to 
 3.3. Perform analysis by:
     3.3.1. grouping by subject and activity label.
     3.3.2. Summarizing the values by establishing 'mean' (or average) of each column.
-    
+
+3.4. Convert activity identifier to activity labels using 'factors'
+
 ### 4. Output the results
 
 4.1 Export analysis results to text file.

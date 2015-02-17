@@ -19,14 +19,12 @@ names(X_test) <- features[, 2]
 
 # Load activity (human-readable format)
 activity_labels <- read.csv(file = "./UCI HAR Dataset/activity_labels.txt", header = FALSE, sep = "")
-names(activity_labels) <- c("ActivityID", "ActivityLabel")
+names(activity_labels) <- c("Activity", "ActivityLabel")
 # Labels, i.e. type of activity
 y_train <- read.csv(file = "./UCI HAR Dataset/train/y_train.txt", header = FALSE, sep = "")
-names(y_train) <- "ActivityID"
-y_train <- merge(y_train, activity_labels, "ActivityID")
+names(y_train) <- "Activity"
 y_test <- read.csv(file = "./UCI HAR Dataset/test/y_test.txt", header = FALSE, sep = "")
-names(y_test) <- "ActivityID"
-y_test <- merge(y_test, activity_labels, "ActivityID")
+names(y_test) <- "Activity"
 
 # Load who performed the activity for each observation
 subject_train <- read.csv(file = "./UCI HAR Dataset/train/subject_train.txt", header = FALSE, sep = "")
@@ -55,13 +53,17 @@ data_df <- union(data_train_df, data_test_df)
 ## 3. Perform preferred analysis
 # Extract only the 'median' and 'standard deviation' measurements
 # Obtain indexes where the column names has "mean()" or "std()"
-indexesExtract <- c(1,3, grep("mean\\(\\)|std\\(\\)", names(data_df), ignore.case=TRUE))
+indexesExtract <- c(2,1, grep("mean\\(\\)|std\\(\\)", names(data_df), ignore.case=TRUE))
 data_df <- data_df[ , indexesExtract]
 
 # Perform analysis: 1. group by subject and activity label, 2. establish 'mean' of each column
 data_analysis <- data_df %>%
-  group_by(ActivityLabel, SubjectID) %>%
+  group_by(Activity, SubjectID) %>%
   summarise_each(funs(mean))
+
+# Convert activity ID to activity labels
+data_analysis$Activity <- as.factor(data_analysis$Activity)
+levels(data_analysis$Activity) <- activity_labels[ , 2]
 
 ## 4. Output the results
 # Export analysis results to text file

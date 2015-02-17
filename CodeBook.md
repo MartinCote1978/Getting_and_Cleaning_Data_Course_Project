@@ -2,7 +2,7 @@
 
 ## Data Dictionary
 
-ActivityLabel               2
+ActivityLabel
     Activity names, as described within the study.
         WALKING
         WALKING_UPSTAIRS
@@ -11,7 +11,7 @@ ActivityLabel               2
         STANDING
         LAYING
 
-SubjectID                   1
+SubjectID
     Subject (i.e. participant within the study) identifier
         00000..99999 Unique identifier.
 
