@@ -2,10 +2,6 @@
 
 ## Data Dictionary
 
-SubjectID                   1
-    Subject (i.e. participant within the study) identifier
-        00000..99999 Unique identifier.
-
 ActivityLabel               2
     Activity names, as described within the study.
         WALKING
@@ -14,6 +10,10 @@ ActivityLabel               2
         SITTING
         STANDING
         LAYING
+
+SubjectID                   1
+    Subject (i.e. participant within the study) identifier
+        00000..99999 Unique identifier.
 
 tBodyAcc-mean()-X
     Average for the specific measure, grouped by observation (subject and activity).
